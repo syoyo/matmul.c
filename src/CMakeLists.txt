@@ -1,4 +1,4 @@
-add_library(matmul matmul.c)
+add_library(matmul matmul.cc parallel.cc)
 
 set(kernels "16x6" "8x12" "8x13" "8x14" "8x8")
 

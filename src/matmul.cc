@@ -1,3 +1,4 @@
+#include <thread>
 #include "avx2_kernels.h"
 
 #define min(x, y) ((x) < (y) ? (x) : (y))
@@ -63,7 +64,7 @@ void pack_blockA(float* A, float* blockA_packed, const int mc, const int kc, con
     }
 }
 
-void matmul(float* A, float* B, float* C, const int M, const int N, const int K) {
+extern "C" void matmul(float* A, float* B, float* C, const int M, const int N, const int K) {
     for (int j = 0; j < N; j += NC) {
         const int nc = min(NC, N - j);
         for (int p = 0; p < K; p += KC) {
@@ -86,7 +87,7 @@ void matmul(float* A, float* B, float* C, const int M, const int N, const int K)
     }
 }
 
-void matmul_naive(float* A, float* B, float* C, const int M, const int N, const int K) {
+extern "C" void matmul_naive(float* A, float* B, float* C, const int M, const int N, const int K) {
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
             for (int p = 0; p < K; p++) {
